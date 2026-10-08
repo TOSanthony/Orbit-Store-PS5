@@ -32,12 +32,12 @@ jobs:
 
       - name: Télécharger les dépendances (.deps) depuis la Release
           env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
-          mkdir -p .deps
-          gh release download deps-v1 --repo ${{ github.repository }} --dir .deps
-          if [ -d "build-inputs/cjson" ]; then cp -r build-inputs/cjson .deps/; fi
-          if [ -f "build-inputs/cacert.pem" ]; then cp build-inputs/cacert.pem .deps/; fi
+            mkdir -p .deps
+            gh release download deps-v1 --repo ${{ github.repository }} --dir .deps
+            if [ -d "build-inputs/cjson" ]; then cp -r build-inputs/cjson .deps/; fi
+            if [ -f "build-inputs/cacert.pem" ]; then cp build-inputs/cacert.pem .deps/; fi
 
       - name: Bootstrap Python et build de l'interface
         run: |
