@@ -1,0 +1,71 @@
+name: Build Orbit Store PS5
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer les sources
+        uses: actions/checkout@v4
+
+      - name: Configurer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Configurer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Dépendances OpenSSL et compilation hôte
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libssl-dev build-essential
+
+      - name: Bootstrap Python et build de l'interface
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python tools/bootstrap.py
+          npm ci
+          npm run build
+
+      - name: Compiler les images Docker SDK et Build
+        run: |
+          docker build -f tools/Dockerfile.sdk -t orbit-sdk:0.43 .
+          docker build -t orbit-build:0.1 .
+
+      - name: Compiler le Payload (.elf)
+        run: |
+          mkdir -p build
+          docker run --rm -v "$PWD:/work" orbit-build:0.1 payload
+
+      - name: Compiler l'image Docker de l'App TV
+        run: |
+          docker build -t orbit-app-build:0.1 app
+
+      - name: Compiler le package FFPKG de l'application TV
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work/app -e BUILD_JOBS=2 orbit-app-build:0.1 make ffpkg
+
+      - name: Vérifier l'intégrité du package
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work/app orbit-app-build:0.1 bash tools/verify-package.sh
+
+      - name: Publier les binaires compilés (Artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbit-store-ps5-build
+          path: |
+            build/orbit_store.elf
+            build/orbit_runtime.elf
+            app/dist/PPSA99177.ffpkg
+            app/dist/*.zip
+          if-no-files-found: error
