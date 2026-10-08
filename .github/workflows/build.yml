@@ -30,6 +30,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libssl-dev build-essential
 
+      - name: Télécharger les dépendances (.deps) depuis la Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p .deps
+          gh release download deps-v1 --repo ${{ github.repository }} --dir .deps
+          cp -r build-inputs/cjson .deps/
+          cp build-inputs/cacert.pem .deps/
+
       - name: Bootstrap Python et build de l'interface
         run: |
           python3 -m venv .venv
