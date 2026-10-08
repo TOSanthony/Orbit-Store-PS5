@@ -1,0 +1,853 @@
+/* TV game hub. Art stays on one canvas; download configuration lives in a
+   controller-navigable bottom panel. All controls and focus states are monochrome. */
+:root.details-open {
+  font-size: clamp(14px, 1.196vw, 24px);
+}
+.screen-details {
+  --gutter: 3.6vw;
+  --ring: 0 0 0 3px #080808, 0 0 0 5px #fff, 0 0 24px 5px #ffffff30;
+}
+.screen-details .header {
+  height: 6rem;
+  min-height: 0;
+  padding: 0 var(--gutter);
+  gap: 1rem;
+}
+.screen-details .header .brand,
+.screen-details .header > .details-back + .brand {
+  margin: 0;
+  padding: 0.4rem 0;
+  font-size: 1.35rem;
+  gap: 0.8rem;
+}
+.screen-details .brand img {
+  width: 2.6rem;
+  height: 2.6rem;
+}
+.screen-details .details-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: auto;
+  height: auto;
+  padding: 0.55rem 0.7rem;
+  border-radius: 999px;
+  background: #1119;
+  font-size: 0.9rem;
+}
+.screen-details .details-back::after {
+  display: none;
+}
+.screen-details .beta-label {
+  font-size: 0.55rem;
+  border: 0;
+  color: #c4c4c4;
+}
+.screen-details > footer {
+  display: none;
+}
+.screen-details .backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: #080808;
+}
+.screen-details .backdrop-layer.wide img {
+  object-position: 72% 35%;
+}
+.screen-details .backdrop::after {
+  background:
+    linear-gradient(90deg, #000d 0%, #0009 29%, #0000 62%),
+    linear-gradient(0deg, #000f 0%, #000a 15%, #0000 54%, #0003 100%);
+}
+.screen-details[data-game="marvels-wolverine"] .backdrop-layer.wide img {
+  object-position: 75% top;
+}
+.product.native-game {
+  display: block;
+  max-width: none;
+  padding: 0 var(--gutter);
+}
+.native-game .hub-content {
+  min-height: calc(100vh - 6rem);
+  display: flex;
+  flex-direction: column;
+  padding: 3.8vh 0 1.8rem;
+}
+.native-game .hub-heading {
+  width: 52%;
+}
+.native-game #product-title {
+  margin: 0;
+  max-width: 13ch;
+  font-family: inherit;
+  font-size: clamp(3.2rem, 4.9vw, 5.4rem);
+  font-weight: 450;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  text-shadow: 0 2px 24px #0005;
+}
+.native-game #product-title.long-title {
+  font-size: clamp(2.5rem, 3.5vw, 4rem);
+  max-width: 21ch;
+}
+.native-game .hub-tagline {
+  margin: 0.8rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: #f4f4f4;
+  overflow-wrap: anywhere;
+}
+.native-game .hub-description {
+  margin: 0.65rem 0 0;
+  max-width: 54ch;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #ddd;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.native-game .hub-launch {
+  margin-top: auto;
+  padding-top: 2rem;
+  max-width: 61%;
+}
+.native-game .hub-release {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.2rem;
+  color: #ddd;
+  font-size: 1rem;
+}
+.native-game .hub-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.native-game .hub-primary,
+.game-sheet .sheet-primary {
+  min-width: 0;
+  min-height: 3.9rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  font-weight: 500;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.native-game .hub-primary {
+  min-width: 19.5rem;
+}
+.native-game .hub-primary svg {
+  width: 1.65rem;
+  height: 1.65rem;
+}
+html:not(.pointer) .native-game .primary:focus,
+html:not(.pointer) .game-sheet .primary:focus {
+  transform: none;
+}
+.native-game .hub-round {
+  width: 3.8rem;
+  height: 3.8rem;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border: 1px solid #ffffff50;
+  background: #181818ad;
+}
+.native-game .hub-round svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+.native-game .hub-round[aria-pressed="true"] svg {
+  fill: currentColor;
+}
+.native-game .hub-round:hover {
+  background: #353535ed;
+}
+.game-pad-hints {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.35rem;
+  padding-top: 2rem;
+  color: #f4f4f4;
+}
+.game-pad-hints > span,
+.game-pad-hints > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  border-radius: 4px;
+}
+.game-pad-hints .pad-symbol {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+/* The context cards expand into a lower tray on the same game canvas. */
+.scrim.game-sheet-scrim {
+  padding: 0 var(--gutter) 1.8rem;
+  justify-content: center;
+  align-items: flex-end;
+  background: #0003;
+  backdrop-filter: none;
+}
+.modal.game-sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  column-gap: 2rem;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  height: min(54vh, 29rem);
+  max-height: calc(100vh - 8rem);
+  padding: 1.25rem 1.5rem 1rem;
+  overflow: hidden;
+  border: 1px solid #ffffff25;
+  border-radius: 1.15rem;
+  background: linear-gradient(145deg, #252525fc, #111111fc 75%);
+  box-shadow: 0 -1rem 5rem #0006;
+}
+.game-sheet .sheet-visible-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  background: #ffffff12;
+}
+.game-sheet .sheet-visible-back svg {
+  width: 1rem;
+  height: 1rem;
+}
+.game-sheet .close {
+  top: 1.6rem;
+  right: 1.35rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.25rem;
+  background: transparent;
+  opacity: 0.7;
+}
+.game-sheet .sheet-heading {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 2.2rem 0.8rem 0.5rem;
+}
+.game-sheet .sheet-heading h2 {
+  font-size: 1.55rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.game-sheet .sheet-scroll {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  overflow: auto;
+  min-height: 0;
+  padding: 0.4rem 0.5rem 0.8rem;
+  scrollbar-width: thin;
+  scrollbar-color: #777 transparent;
+  overscroll-behavior: contain;
+}
+.game-sheet .sheet-settings {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+.modal.game-sheet-downloads {
+  height: min(66vh, 33rem);
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+}
+.game-sheet-downloads > .sheet-settings {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  padding: 0.4rem 0.5rem 0.8rem;
+}
+.game-sheet-downloads .sheet-scroll {
+  grid-column: 1;
+  grid-row: 3;
+}
+.modal.game-sheet-downloads .sheet-hints {
+  grid-row: 4;
+}
+.game-sheet .sheet-confirm {
+  grid-column: 2;
+  grid-row: 3;
+  align-self: end;
+}
+.game-sheet .sheet-hints {
+  grid-column: 1 / -1;
+  grid-row: 3;
+}
+.game-sheet .sheet-setting {
+  gap: 0.65rem;
+}
+.game-sheet .sheet-setting-icon {
+  display: none;
+}
+.game-sheet .sheet-choices {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-content: start;
+}
+.game-sheet .sheet-choices > .sheet-note,
+.game-sheet .sheet-choices > .sheet-budget,
+.game-sheet .sheet-choices > .sheet-meter {
+  grid-column: 1 / -1;
+}
+.game-sheet .game-about .facts {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.game-sheet .sheet-setting {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 1.15rem;
+  padding: 0.75rem 0.5rem;
+  min-height: 4.75rem;
+  background: transparent;
+  border-radius: 0.9rem;
+  text-align: left;
+  font-weight: 400;
+}
+.game-sheet .sheet-setting:hover,
+.game-sheet .sheet-choice:hover {
+  background: #ffffff0c;
+}
+.game-sheet .sheet-setting > span:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+}
+.game-sheet .sheet-setting > svg:last-child {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.35rem;
+}
+.game-sheet .sheet-setting-icon {
+  display: grid;
+  place-items: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  flex-shrink: 0;
+  background: #ffffff15;
+  border-radius: 50%;
+}
+.game-sheet .sheet-setting-icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+.game-sheet .sheet-setting small {
+  display: block;
+  font-size: 0.8rem;
+  color: #c4c4c4;
+  line-height: 1.35;
+}
+.game-sheet .sheet-setting strong {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin: 0.16rem 0;
+  line-height: 1.3;
+}
+.game-sheet .provider-browser-option {
+  margin: 0.8rem 0 0;
+  padding: 1rem 0 0.2rem;
+  border: 0;
+  border-top: 1px solid #ffffff30;
+  background: transparent;
+  border-radius: 0;
+  font-size: 0.8rem;
+  color: #ccc;
+}
+.game-sheet .provider-browser-option > strong {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+}
+.game-sheet .provider-browser-option ol {
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  gap: 0.65rem;
+  padding: 0;
+  margin: 0.8rem 0;
+}
+.game-sheet .provider-browser-option li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 2rem;
+  line-height: 1.45;
+}
+.game-sheet .provider-browser-option li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0.08rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  display: grid;
+  place-items: center;
+  background: #f5f5f5;
+  color: #111;
+  border: 0;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.game-sheet .provider-browser-option li strong {
+  font-weight: 500;
+  color: #f5f5f5;
+}
+.game-sheet .provider-browser-option > p {
+  font-size: 0.77rem;
+  line-height: 1.4;
+  margin-top: 0.7rem;
+}
+.game-sheet .sheet-note {
+  color: #bfbfbf;
+  font-size: 0.8rem;
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+.game-sheet .sheet-confirm {
+  margin-top: auto;
+  padding: 0.6rem 0.5rem 0;
+  flex-shrink: 0;
+}
+.game-sheet .sheet-estimate {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+  border-top: 1px solid #ffffff30;
+  padding: 0.9rem 0 1rem;
+  color: #ccc;
+  font-size: 0.8rem;
+}
+.game-sheet .sheet-estimate strong {
+  color: #fff;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.game-sheet .sheet-primary {
+  width: 100%;
+  min-height: 3.3rem;
+  font-size: 0.96rem;
+  padding: 0.7rem 0.8rem;
+}
+.game-sheet .sheet-footnote {
+  margin-top: 0.65rem;
+  font-size: 0.65rem;
+  color: #aaa;
+  line-height: 1.4;
+}
+.game-sheet .sheet-hints {
+  padding: 1.1rem 0.5rem 0;
+  flex-shrink: 0;
+}
+.game-sheet .sheet-choices {
+  display: grid;
+  gap: 0.7rem;
+}
+.game-sheet .sheet-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 0.75rem;
+  width: 100%;
+  background: transparent;
+  border-radius: 0.8rem;
+  text-align: left;
+  font-weight: 400;
+}
+.game-sheet .sheet-choice[aria-pressed="true"] {
+  background: #ffffff0c;
+}
+.game-sheet .sheet-choice strong {
+  font-weight: 500;
+  font-size: 1.08rem;
+}
+.game-sheet .sheet-choice small {
+  display: block;
+  font-size: 0.8rem;
+  color: #c4c4c4;
+  line-height: 1.5;
+  margin-top: 0.2rem;
+  overflow-wrap: anywhere;
+}
+.game-sheet .sheet-choice-check {
+  flex: 0 0 1.3rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid #aaa;
+  border-radius: 50%;
+}
+.game-sheet .sheet-choice[aria-pressed="true"] .sheet-choice-check {
+  background: #fff;
+  color: #111;
+  border-color: #fff;
+}
+.game-sheet .sheet-choice-check svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+.game-sheet .sheet-budget {
+  margin-top: 1.3rem;
+}
+.game-sheet .sheet-budget > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+}
+.game-sheet .sheet-budget dt {
+  color: #ccc;
+}
+.game-sheet .sheet-budget dd {
+  margin: 0;
+  white-space: nowrap;
+}
+.game-sheet .sheet-budget > div:last-child {
+  border-top: 1px solid #ffffff30;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+}
+.game-sheet .sheet-meter {
+  width: 100%;
+  height: 0.35rem;
+  background: #555;
+  border: 0;
+  border-radius: 1rem;
+}
+.game-sheet .sheet-meter::-webkit-meter-bar {
+  background: #555;
+  height: 0.35rem;
+  border: 0;
+}
+.game-sheet .sheet-meter::-webkit-meter-optimum-value {
+  background: #eee;
+}
+.game-sheet .game-about .about-title {
+  font-size: 1.55rem;
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+}
+.game-sheet .game-about .description {
+  font-size: 0.95rem;
+  color: #ddd;
+  line-height: 1.65;
+  margin-bottom: 1.6rem;
+}
+.game-sheet .game-about .facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: none;
+  margin: 0 0 1.5rem;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid #ffffff30;
+}
+.game-sheet .game-about .facts dt {
+  color: #aaa;
+  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+}
+.game-sheet .game-about .facts dd {
+  margin: 0;
+  font-size: 1rem;
+}
+.game-sheet .collection-presence,
+.game-sheet .destination,
+.game-sheet .fine,
+.game-sheet .notice,
+.game-sheet .form-error {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  margin-top: 0.75rem;
+}
+.game-sheet .destination {
+  color: #aaa;
+  overflow-wrap: anywhere;
+}
+.game-sheet .download-another,
+.game-sheet .provider-direct-option button,
+.game-sheet .collection-presence button {
+  font-size: 0.85rem;
+  margin-top: 0.7rem;
+}
+/* Opening a tray keeps the hero framing and title in place. */
+.game-sheet-open .native-game .hub-launch,
+.game-sheet-open .native-game .hub-content > .game-pad-hints {
+  visibility: hidden;
+}
+@media (max-width: 1100px) {
+  .screen-details {
+  }
+  .modal.game-sheet {
+    column-gap: 1rem;
+  }
+  .native-game .hub-launch {
+    max-width: 80%;
+  }
+
+}
+@media (max-height: 760px) and (min-width: 761px) {
+  .native-game .hub-content {
+    padding-top: 1vh;
+    padding-bottom: 1rem;
+  }
+  .native-game .hub-launch {
+    padding-top: 1.3rem;
+  }
+  .native-game .game-pad-hints {
+    padding-top: 1.2rem;
+  }
+  .modal.game-sheet {
+    padding-top: 1rem;
+    padding-bottom: 0.8rem;
+  }
+  .game-sheet .sheet-heading {
+    padding-bottom: 0.8rem;
+  }
+}
+@media (max-width: 760px) {
+  :root.details-open {
+    font-size: 16px;
+  }
+  .screen-details {
+    --gutter: 6vw;
+  }
+  .screen-details .header {
+    height: 5rem;
+  }
+  .screen-details .header .brand,
+  .screen-details .header > .details-back + .brand {
+    font-size: 1.1rem;
+  }
+  .screen-details .brand img {
+    width: 2rem;
+    height: 2rem;
+  }
+  .screen-details .backdrop-layer.wide img {
+    object-position: 65% top;
+  }
+  .screen-details .backdrop::after {
+    background:
+      linear-gradient(0deg, #000 0%, #000d 38%, #0002 75%),
+      linear-gradient(90deg, #0008, #0000);
+  }
+  .native-game .hub-content {
+    min-height: calc(100svh - 5rem);
+    padding-top: 24vh;
+    padding-bottom: 1.4rem;
+  }
+  .native-game .hub-heading {
+    width: 100%;
+  }
+  .native-game #product-title {
+    font-size: clamp(2.4rem, 9vw, 4rem);
+    max-width: 14ch;
+  }
+  .native-game #product-title.long-title {
+    font-size: 2.3rem;
+  }
+  .native-game .hub-launch {
+    padding-top: 1.8rem;
+    max-width: none;
+  }
+  .native-game .hub-release {
+    font-size: 0.85rem;
+    gap: 0.45rem;
+  }
+  .native-game .hub-actions {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .native-game .hub-primary {
+    width: 100%;
+    min-width: 0;
+    min-height: 3.5rem;
+    font-size: clamp(0.76rem, 3.8vw, 1rem);
+    padding: 0.75rem 0.65rem;
+  }
+  .native-game .hub-primary svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .native-game .hub-round {
+    width: 3rem;
+    height: 3rem;
+  }
+  .game-pad-hints {
+    gap: 0.85rem;
+    padding-top: 1.5rem;
+  }
+  .game-pad-hints > button,
+  .game-pad-hints > span {
+    font-size: 0.72rem;
+    gap: 0.3rem;
+  }
+  .game-pad-hints .pad-symbol {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  .scrim.game-sheet-scrim {
+    padding: 0;
+  }
+  .modal.game-sheet {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    padding: 1.1rem 5vw 1rem;
+    height: 92svh;
+    max-height: 92svh;
+    border-radius: 1rem 1rem 0 0;
+  }
+  .game-sheet .sheet-scroll {
+    flex: 1;
+  }
+  .game-sheet .sheet-settings {
+    grid-template-columns: 1fr;
+  }
+  .game-sheet .sheet-setting-icon {
+    display: grid;
+  }
+  .game-sheet .sheet-choices {
+    grid-template-columns: 1fr;
+  }
+  .game-sheet .sheet-confirm {
+    align-self: stretch;
+  }
+  .game-sheet .sheet-visible-back {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  .game-sheet .sheet-heading {
+    gap: 0.55rem;
+  }
+
+  .game-sheet .sheet-heading {
+    padding: 0 1.8rem 1rem 0.3rem;
+  }
+  .game-sheet .sheet-heading h2 {
+    font-size: 1.3rem;
+  }
+  .game-sheet .sheet-setting {
+    gap: 0.8rem;
+    min-height: 5rem;
+  }
+  .game-sheet .sheet-setting-icon {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+  .game-sheet .sheet-setting strong {
+    font-size: 1rem;
+  }
+  .game-sheet .sheet-setting small {
+    font-size: 0.78rem;
+  }
+  .game-sheet .sheet-primary {
+    font-size: clamp(0.76rem, 3.8vw, 0.96rem);
+    padding: 0.75rem 0.35rem;
+  }
+  .game-sheet .sheet-estimate {
+    font-size: 0.73rem;
+  }
+  .game-sheet .sheet-hints {
+    padding-top: 0.8rem;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .game-sheet {
+    animation: game-sheet-enter 0.22s ease-out;
+  }
+  @keyframes game-sheet-enter {
+    from {
+      transform: translateY(12%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+.game-sheet .provider-browser-option ol {
+  font-size: 0.8rem;
+}
+.game-sheet .provider-browser-option li + li {
+  margin-top: 0;
+}
+@media (max-width: 760px) {
+  .modal.game-sheet {
+    background: linear-gradient(135deg, #222, #111 65%);
+  }
+}
+
+/* Longer translated actions keep their complete label on compact devices. */
+@media (max-width: 760px) {
+  .native-game .hub-primary[data-long-label],
+  .game-sheet .sheet-primary[data-long-label] {
+    font-size: clamp(0.66rem, 2.95vw, 0.96rem);
+  }
+}
+.game-sheet .sheet-confirm > .form-error {
+  margin: 0 0 0.6rem;
+}
+.game-sheet [data-controller-scroll] {
+  border-radius: 0.25rem;
+}
+.game-sheet-downloads .sheet-settings .sheet-setting {
+  gap: 0.6rem;
+  min-height: 5.6rem;
+}
+.game-sheet-downloads .sheet-settings .sheet-setting-icon {
+  display: grid;
+  width: 2.2rem;
+  height: 2.2rem;
+}
+.game-sheet-downloads .sheet-settings .sheet-setting-icon svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+@media (min-width: 761px) {
+  .game-sheet .game-about .facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.game-sheet-downloads > .sheet-settings .sheet-setting {
+  background: #ffffff06;
+}
+@media (max-width: 760px) {
+  .game-sheet-downloads > .sheet-settings {
+    padding-bottom: 0.6rem;
+  }
+  .game-sheet-downloads .sheet-settings .sheet-setting {
+    min-height: 4.3rem;
+    padding: 0.45rem 0.5rem;
+  }
+}
+
+.game-sheet-downloads .provider-browser-option {
+  margin-top: 0;
+  padding-top: 0.65rem;
+}

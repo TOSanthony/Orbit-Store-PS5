@@ -1,0 +1,12 @@
+# Left out of the release source archive (git archive): internal notes and tests, not needed to build.
+/README.md export-ignore
+/docs/ export-ignore
+/tests/ export-ignore
+/catalog/source-candidates.json export-ignore
+# Corresponding inputs are supplied as authenticated .enc files. The key and
+# decoding/build tools remain in the source archive; this is not access control.
+/catalog/games.json export-ignore
+/catalog/releases.json export-ignore
+/catalog/catalog.json export-ignore
+# Preserve upstream licence text byte for byte, including its original line endings.
+/licenses/ps5-opengl/** -whitespace

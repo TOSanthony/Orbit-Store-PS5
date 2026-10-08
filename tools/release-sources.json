@@ -1,0 +1,72 @@
+[
+  {
+    "name": "ps5-payload-sdk-d9c9519.tar.gz",
+    "url": "https://github.com/ps5-payload-dev/sdk/archive/d9c9519116944a7f1c22d262012c53b80b3520b7.tar.gz",
+    "sha256": "44b541e77eef201afb4fbb6b32af9b97a4cdf893fc2d944d228ff46a8235fd10"
+  },
+  {
+    "name": "libmicrohttpd-1.0.1.tar.gz",
+    "url": "https://ftp.gnu.org/gnu/libmicrohttpd/libmicrohttpd-1.0.1.tar.gz",
+    "sha256": "a89e09fc9b4de34dde19f4fcb4faaa1ce10299b9908db1132bbfa1de47882b94"
+  },
+  {
+    "name": "ps5-opengl-sdk-1.0.0.tar.gz",
+    "url": "https://github.com/blackbearreloaded/ps5-opengl/releases/download/v1.0.0/ps5-opengl-sdk-1.0.0.tar.gz",
+    "sha256": "f93643c04c843d56143b00951df1f8042ea7706ae9f19e4e9abf158e1ead77c5"
+  },
+  {
+    "name": "ps5-payload-sdk-4eb7012.tar.gz",
+    "url": "https://github.com/ps5-payload-dev/sdk/archive/4eb701204fc3f8d31e84cf8ca272974e2be9c867.tar.gz",
+    "sha256": "fc9f5974e540c4d4af912f0661cf44075651e67a4d0070a6e8ad44e01bee8ac2"
+  },
+  {
+    "name": "pacbrew-repo-1687e82.tar.gz",
+    "url": "https://github.com/ps5-payload-dev/pacbrew-repo/archive/1687e827675c66e1b040751c7f0811222bd3aea0.tar.gz",
+    "sha256": "0b05d8c04597acf3b8a056b22b83b19e017ceac59f3cb1af0c149229997ecbbe"
+  },
+  {
+    "name": "libwebp-1.4.0.tar.gz",
+    "url": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.4.0.tar.gz",
+    "sha256": "61f873ec69e3be1b99535634340d5bde750b2e4447caa1db9f61be3fd49ab1e5"
+  },
+  {
+    "name": "libcxx-18.1.8.src.tar.xz",
+    "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/libcxx-18.1.8.src.tar.xz",
+    "sha256": "bdecf90be0072bc720fd5c9c8ab061cdb197edd0c8ad3e170dc3e6bfaa49f388"
+  },
+  {
+    "name": "libcxxabi-18.1.8.src.tar.xz",
+    "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/libcxxabi-18.1.8.src.tar.xz",
+    "sha256": "256c30d724eeb72713bc08ae1692f53aaf4ebe8a1d662c92bf59e69d6c53dce9"
+  },
+  {
+    "name": "libunwind-18.1.8.src.tar.xz",
+    "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/libunwind-18.1.8.src.tar.xz",
+    "sha256": "c31577d16978b0da0e472ef751f74893a5b459a7ea4a383b75f7ab93cf1e6877"
+  },
+  {
+    "name": "cmake-18.1.8.src.tar.xz",
+    "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/cmake-18.1.8.src.tar.xz",
+    "sha256": "59badef592dd34893cd319d42b323aaa990b452d05c7180ff20f23ab1b41e837"
+  },
+  {
+    "name": "compiler-rt-18.1.3.src.tar.xz",
+    "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.3/compiler-rt-18.1.3.src.tar.xz",
+    "sha256": "9a7df9300413696b0c4f7ff1e2729cb82aca375f35c05d698c44f26a4edf1c27"
+  },
+  {
+    "name": "curl-8.18.0.tar.xz",
+    "url": "https://curl.se/download/curl-8.18.0.tar.xz",
+    "sha256": "40df79166e74aa20149365e11ee4c798a46ad57c34e4f68fd13100e2c9a91946"
+  },
+  {
+    "name": "openssl-3.5.2.tar.gz",
+    "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.2/openssl-3.5.2.tar.gz",
+    "sha256": "c53a47e5e441c930c3928cf7bf6fb00e5d129b630e0aa873b08258656e7345ec"
+  },
+  {
+    "name": "zlib-1.3.2.tar.gz",
+    "url": "https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz",
+    "sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16"
+  }
+]

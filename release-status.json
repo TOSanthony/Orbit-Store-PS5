@@ -1,0 +1,19 @@
+{
+  "version": "0.9.1",
+  "channel": "beta",
+  "licenseCleared": true,
+  "localRegressionPassed": true,
+  "catalogLinksVerified": true,
+  "betaConsoleSmokePassed": false,
+  "betaLimitationsDocumented": true,
+  "consoleTestPassed": false,
+  "homeScreenLifecycleVerified": false,
+  "reason": "Owner authorized the 0.9.1 release on 2026-10-08 after local preparation. The reviewed storage fix and versioned main passed 82 browser tests, 100 native tests, 48 catalogue tests, 283 backend integration tests, 3 payload import tests and the storage/transfer drivers. Catalogue and interfaces are unchanged from 0.9.0; catalogue-link and licence evidence is retained. Console validation is deferred by the owner and is not marked passed. Final packages and source/licence bundle are rebuilt and verified from the release commit; evidence is under .state/release-0.9.1.",
+  "catalogSourcesVerifiedOnConsole": false,
+  "tvAppVersion": "1.2.2",
+  "betaConsoleCheckDeferred": {
+    "version": "0.9.1",
+    "authorizedByOwner": true,
+    "reason": "Owner instructed publication after being informed that 0.9.1 console validation remains pending. No console access is authorized or performed for this release."
+  }
+}
