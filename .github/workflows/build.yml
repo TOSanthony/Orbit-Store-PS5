@@ -7,6 +7,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,13 +34,14 @@ jobs:
           sudo apt-get install -y libssl-dev build-essential
 
       - name: Télécharger les dépendances (.deps) depuis la Release
-          env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            mkdir -p .deps
-            gh release download deps-v1 --repo ${{ github.repository }} --dir .deps
-            if [ -d "build-inputs/cjson" ]; then cp -r build-inputs/cjson .deps/; fi
-            if [ -f "build-inputs/cacert.pem" ]; then cp build-inputs/cacert.pem .deps/; fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p .deps
+          gh release download deps-v1 --repo "${{ github.repository }}" --dir .deps --clobber
+          if [ -d "build-inputs/cjson" ]; then cp -rf build-inputs/cjson .deps/; fi
+          if [ -f "build-inputs/cacert.pem" ]; then cp -f build-inputs/cacert.pem .deps/; fi
+          ls -la .deps/
 
       - name: Bootstrap Python et build de l'interface
         run: |
